@@ -58,6 +58,7 @@ option(no_logging "disable logging" OFF)
 option(use_installed_dependencies "set use_installed_dependencies to ON to use installed packages instead of building dependencies from submodules" OFF)
 option(warnings_as_errors  "enable strict compiler warnings-as-errors" ON)
 option(strict_prototypes  "enable GCC strict-prototypes compiler option. This is not supported with test code enabled." OFF)
+option(use_zc_preprocessor "enable MSVC /Zc:preprocessor conformant preprocessor (default is OFF)" OFF)
 option(build_as_dynamic "build the IoT SDK libaries as dynamic"  OFF)
 # Turn on/off IoT features
 option(use_prov_client "Enable provisioning client" ON)
@@ -119,6 +120,12 @@ if (NOT "${linkerOption}" STREQUAL "")
     message("linkerOption: ${CMAKE_SHARED_LINKER_FLAGS}")
     set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${linkerOption}")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${linkerOption}")
+endif()
+
+if (MSVC AND ${use_zc_preprocessor})
+    # Enable conformant preprocessor
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zc:preprocessor")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /Zc:preprocessor")
 endif()
 
 if (${warnings_as_errors})
