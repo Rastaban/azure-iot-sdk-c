@@ -325,7 +325,7 @@ extern "C"
 
 /* These macros remove a useless comma from the beginning of an argument list that looks like:
 ,x1,y1,x2,y2 */
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && (!defined(_MSVC_TRADITIONAL) || _MSVC_TRADITIONAL)
 
 #define DROP_FIRST_COMMA(N, x) \
 x MU_IFCOMMA_NOFIRST(N)
@@ -645,7 +645,7 @@ Actions are discarded, since no marshalling will be done for those when sending 
 #define ADDRESS_MACRO(x) ,&x
 
 #define KEEP_FIRST_(X, ...) X
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && (!defined(_MSVC_TRADITIONAL) || _MSVC_TRADITIONAL)
 #define KEEP_FIRST(X) KEEP_FIRST_ LPAREN X)
 #else
 #define KEEP_FIRST(X) KEEP_FIRST_(X)

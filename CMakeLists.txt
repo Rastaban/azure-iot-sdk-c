@@ -121,6 +121,12 @@ if (NOT "${linkerOption}" STREQUAL "")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${linkerOption}")
 endif()
 
+if (MSVC)
+    # Enable conformant preprocessor
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zc:preprocessor")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /Zc:preprocessor")
+endif()
+
 if (${warnings_as_errors})
     if (MSVC)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4 /wd4232")
